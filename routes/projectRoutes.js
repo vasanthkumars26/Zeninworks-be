@@ -1,0 +1,64 @@
+const express = require('express');
+const router = express.Router();
+const Project = require('../models/Project');
+const multer = require('multer');
+const path = require('path');
+
+// Multer configured
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
+const upload = multer({ storage: storage });
+
+router.get('/', async (req, res) => {
+  try {
+    const projects = await Project.find().sort({ createdAt: -1 });
+    res.json(projects);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.post('/', upload.single('image'), async (req, res) => {
+  try {
+    const projectData = { ...req.body };
+    if (req.file) {
+      projectData.image = `/uploads/${req.file.filename}`;
+    }
+    // ensure tech is handled if it comes as a JSON string when using form-data
+    if (typeof projectData.tech === 'string') {
+      try {
+        const parsedTech = JSON.parse(projectData.tech);
+        if (Array.isArray(parsedTech)) {
+          projectData.tech = parsedTech;
+        }
+      } catch (e) {
+        // if not valid json, just use it as string, or we already handle it in AdminDashboard before parsing?
+        // Wait, FormData will send it as string. We should just parse if it's string.
+        projectData.tech = projectData.tech.split(',').map(t => t.trim()).filter(Boolean);
+      }
+    }
+    
+    const newProject = new Project(projectData);
+    await newProject.save();
+    res.status(201).json(newProject);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.delete('/:id', async (req, res) => {
+  try {
+    await Project.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Project deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+module.exports = router;
