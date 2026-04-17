@@ -6,6 +6,7 @@ const projectSchema = new mongoose.Schema({
   tech: [{ type: String }],
   link: { type: String, required: true },
   image: { type: String }, // path to the uploaded image
+  revenue: { type: Number, default: 0 },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Project', projectSchema);

@@ -61,4 +61,27 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+router.patch('/:id', upload.single('image'), async (req, res) => {
+  try {
+    const projectData = { ...req.body };
+    if (req.file) {
+      projectData.image = `/uploads/${req.file.filename}`;
+    }
+    if (typeof projectData.tech === 'string') {
+      try {
+        const parsedTech = JSON.parse(projectData.tech);
+        if (Array.isArray(parsedTech)) {
+          projectData.tech = parsedTech;
+        }
+      } catch (e) {
+        projectData.tech = projectData.tech.split(',').map(t => t.trim()).filter(Boolean);
+      }
+    }
+    const updatedProject = await Project.findByIdAndUpdate(req.params.id, projectData, { new: true });
+    res.json(updatedProject);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;

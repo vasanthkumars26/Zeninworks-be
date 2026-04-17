@@ -71,7 +71,7 @@ app.use(
         callback(new Error("CORS policy: This origin is not allowed"));
       }
     },
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     credentials: true
   })
 );
