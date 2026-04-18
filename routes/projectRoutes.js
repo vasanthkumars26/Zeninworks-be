@@ -3,6 +3,7 @@ const router = express.Router();
 const Project = require('../models/Project');
 const multer = require('multer');
 const path = require('path');
+const { apiKeyMiddleware } = require('../middleware/auth');
 
 // Multer configured
 const storage = multer.diskStorage({
@@ -27,7 +28,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.post('/', upload.single('image'), async (req, res) => {
+router.post('/', apiKeyMiddleware, upload.single('image'), async (req, res) => {
   try {
     const projectData = { ...req.body };
     if (req.file) {
@@ -55,7 +56,7 @@ router.post('/', upload.single('image'), async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', apiKeyMiddleware, async (req, res) => {
   try {
     await Project.findByIdAndDelete(req.params.id);
     res.json({ message: 'Project deleted successfully' });
@@ -64,7 +65,7 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-router.patch('/:id', upload.single('image'), async (req, res) => {
+router.patch('/:id', apiKeyMiddleware, upload.single('image'), async (req, res) => {
   try {
     const projectData = { ...req.body };
     if (req.file) {
