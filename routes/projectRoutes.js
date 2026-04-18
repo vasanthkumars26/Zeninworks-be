@@ -19,7 +19,7 @@ const upload = multer({
   limits: { fieldSize: 50 * 1024 * 1024 } // 50MB limit for text fields (like base64 image)
 });
 
-router.get('/', async (req, res) => {
+router.get('/', apiKeyMiddleware, async (req, res) => {
   try {
     const projects = await Project.find().sort({ createdAt: -1 });
     res.json(projects);
