@@ -3,10 +3,10 @@ const nodemailer = require('nodemailer');
 
 exports.createInquiry = async (req, res) => {
   try {
-    const { name, email, projectType, budget, deadline, requirements } = req.body;
+    const { name, email, mobile, projectType, budget, deadline, requirements } = req.body;
     
     const newInquiry = new Inquiry({
-      name, email, projectType, budget, deadline, requirements
+      name, email, mobile, projectType, budget, deadline, requirements
     });
 
     await newInquiry.save();
