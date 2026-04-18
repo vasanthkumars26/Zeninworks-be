@@ -141,7 +141,7 @@ exports.updateBooking = async (req, res) => {
           replyTo: 'vasanthkumar52itskct@gmail.com',
           subject: emailSubject,
           html: emailHtml,
-          text: \`Hello \${updated.name},\n\nYour discovery call has been scheduled.\nDate: \${updated.date}\nTime: \${updated.time}\nLink: \${gmeetLink}\n\nBest,\nZeninworks\`
+          text: `Hello ${updated.name},\n\nYour discovery call has been scheduled.\nDate: ${updated.date}\nTime: ${updated.time}\nLink: ${gmeetLink}\n\nBest,\nZeninworks`
         });
         console.log('Email sent successfully to', updated.email);
       } catch (emailErr) {
