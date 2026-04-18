@@ -13,7 +13,10 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + path.extname(file.originalname));
   }
 });
-const upload = multer({ storage: storage });
+const upload = multer({ 
+  storage: storage,
+  limits: { fieldSize: 50 * 1024 * 1024 } // 50MB limit for text fields (like base64 image)
+});
 
 router.get('/', async (req, res) => {
   try {
