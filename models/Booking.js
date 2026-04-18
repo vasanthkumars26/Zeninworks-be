@@ -7,6 +7,7 @@ const bookingSchema = new mongoose.Schema({
   time: { type: String, required: true },
   status: { type: String, default: 'Pending' }, // Pending, Confirmed
   gmeetLink: { type: String, default: '' },
+  message: { type: String, default: '' },
   createdAt: { type: Date, default: Date.now },
 });
 
