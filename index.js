@@ -55,7 +55,7 @@ const app = express();
 // ✅ Allowed frontend origins
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://zeninworks.vercel.app"
+  "https://www.zeninworks.com"
 ];
 
 // ✅ CORS middleware for local + deployed frontend
