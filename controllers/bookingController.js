@@ -38,8 +38,8 @@ exports.updateBooking = async (req, res) => {
       const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: { 
-          user: 'vasanthkumar52itskct@gmail.com', 
-          pass: 'tixy zeowoxqyrgan' 
+          user: 'zeninworksglobal@gmail.com', 
+          pass: 'izshrakensvxyaaz' 
         }
       });
       
@@ -126,7 +126,7 @@ exports.updateBooking = async (req, res) => {
             </div>
             <div class="footer">
               <p>&copy; ${new Date().getFullYear()} Zeninworks. All rights reserved.</p>
-              <p><a href="https://zeninworks.vercel.app">zeninworks.vercel.app</a></p>
+              <p><a href="https://www.zeninworks.com">https://www.zeninworks.com</a></p>
             </div>
           </div>
         </div>
@@ -136,9 +136,9 @@ exports.updateBooking = async (req, res) => {
 
       try {
         await transporter.sendMail({
-          from: '"Zeninworks" <vasanthkumar52itskct@gmail.com>',
+          from: '"Zeninworks" <zeninworksglobal@gmail.com>',
           to: updated.email,
-          replyTo: 'vasanthkumar52itskct@gmail.com',
+          replyTo: 'zeninworksglobal@gmail.com',
           subject: emailSubject,
           html: emailHtml,
           text: `Hello ${updated.name},\n\nYour discovery call has been scheduled.\nDate: ${updated.date}\nTime: ${updated.time}\nLink: ${gmeetLink}\n\nBest,\nZeninworks`
